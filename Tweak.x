@@ -172,7 +172,7 @@ static int downFinger_=0;
 -(void)pressesBegan:(id)arg1 withEvent:(id)arg2 { Log(@"PRESSES BEGAN: %@, %@", arg1, arg2); %orig; }
 
 %end
-*/
+
 %hook UIAlertController
 
 
@@ -210,6 +210,31 @@ static int downFinger_=0;
 -(void)setTitle:(NSString *)arg1 { Log(@"SET TITLE: %@", arg1); %orig; }
 
 -(void)_dismissWithAction:(id)arg1 { Log(@"DISMISSED WITH ACTION: %@", arg1); %orig; }
+
+%end
+*/
+
+%hook UIAlertController
+
+-(void)addAction:(id)arg1 {
+    Log(@"ADD ACTION: %@", arg1); %orig;
+    if ([[arg1 title] isEqual:@"Annehmen"]) {
+        // Your block of code to be executed after the delay
+        void (^delayedBlock)(void) = ^{
+            Log(@"Auto-accepting... (WIP)");
+            [self performSelector:@selector(_dismissWithAction:) withObject:arg1];
+
+            Log(@"Delayed action executed");
+        };
+
+        // Usage:
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), delayedBlock);
+        Log(@"Scheduled auto-accept...");
+    }
+}
+
 
 %end
 

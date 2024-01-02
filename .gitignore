@@ -1,0 +1,4 @@
+.theos/
+.idea
+packages/
+.DS_Store
