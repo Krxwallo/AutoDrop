@@ -7,29 +7,29 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString * nsDomainString = @"io.github.krxwallo.autodropy";
-static NSString * nsNotificationString = @"io.github.krxwallo.autodropy/preferences.changed";
+static NSString * nsDomainString = @"io.github.krxwallo.AutoDrop";
+static NSString * nsNotificationString = @"io.github.krxwallo.AutoDrop/preferences.changed";
 static BOOL enabled;
 
-static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
-	NSNumber * enabledValue = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled" inDomain:nsDomainString];
-	enabled = (enabledValue)? [enabledValue boolValue] : YES;
-    Log(@"Enabled is now %d", enabled);
-}
-
 /**
- * Log a message to the console with the [Autodropy] prefix
+ * Log a message to the console with the [AutoDrop] prefix
  * @param format The message to log
  */
 static void Log(NSString *format, ...) {
     va_list args;
     va_start(args, format);
 
-    NSString *formattedString = [[NSString alloc] initWithFormat:[@"[Autodropy] " stringByAppendingString:format] arguments:args];
+    NSString *formattedString = [[NSString alloc] initWithFormat:[@"[AutoDrop] " stringByAppendingString:format] arguments:args];
 
     va_end(args);
 
     NSLog(@"%@", formattedString);
+}
+
+static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
+	NSNumber * enabledValue = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled" inDomain:nsDomainString];
+	enabled = (enabledValue)? [enabledValue boolValue] : YES;
+    Log(@"Enabled is now %d", enabled);
 }
 
 %ctor {
