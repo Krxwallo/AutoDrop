@@ -25,13 +25,13 @@
                 <key>default</key>
                 <true />
                 <key>defaults</key>
-                <string>io.github.krxwallo.Autodrop</string>
+                <string>io.github.krxwallo.AutoDrop</string>
                 <key>key</key>
-                <string>Enabled</string>
+                <string>enabled</string>
                 <key>label</key>
                 <string>Enabled</string>
                 <key>PostNotification</key>
-                <string>io.github.krxwallo.Autodrop-Enabled</string>
+                <string>io.github.krxwallo.AutoDrop/preferences.changed</string>
             </dict>
             <dict>
                 <key>cell</key>
@@ -43,7 +43,7 @@
                 <key>cell</key>
                 <string>PSEditTextCell</string>
                 <key>defaults</key>
-                <string>io.github.krxwallo.Autodrop</string>
+                <string>io.github.krxwallo.AutoDrop</string>
                 <key>label</key>
                 <string>Auto-Accept delay: </string>
                 <key>isDecimalPad</key>
@@ -53,7 +53,7 @@
                 <key>key</key>
                 <string>acceptDelay</string>
                 <key>PostNotification</key>
-                <string>io.github.krxwallo.AutoDrop-Settings</string>
+                <string>io.github.krxwallo.AutoDrop/preferences.changed</string>
             </dict>
         </array>
         <key>title</key>

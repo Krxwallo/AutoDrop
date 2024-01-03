@@ -10,6 +10,7 @@
 static NSString * nsDomainString = @"io.github.krxwallo.AutoDrop";
 static NSString * nsNotificationString = @"io.github.krxwallo.AutoDrop/preferences.changed";
 static BOOL enabled;
+static float acceptDelay;
 
 /**
  * Log a message to the console with the [AutoDrop] prefix
@@ -29,7 +30,11 @@ static void Log(NSString *format, ...) {
 static void notificationCallback(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo) {
 	NSNumber * enabledValue = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"enabled" inDomain:nsDomainString];
 	enabled = (enabledValue)? [enabledValue boolValue] : YES;
-    Log(@"Enabled is now %d", enabled);
+  Log(@"Enabled is now %d", enabled);
+    
+  NSNumber * acceptDelayValue = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:@"acceptDelay" inDomain:nsDomainString];
+	acceptDelay = (acceptDelayValue)? [acceptDelayValue floatValue] : 2.0;
+  Log(@"AcceptDelay is now %f", acceptDelay);  
 }
 
 %ctor {
@@ -218,7 +223,7 @@ static int downFinger_=0;
 
 -(void)addAction:(id)arg1 {
     Log(@"ADD ACTION: %@", arg1); %orig;
-    if ([[arg1 title] isEqual:@"Annehmen"]) {
+    if (enabled && [[arg1 title] isEqual:@"Annehmen"]) {
         // Your block of code to be executed after the delay
         void (^delayedBlock)(void) = ^{
             Log(@"Auto-accepting... (WIP)");
