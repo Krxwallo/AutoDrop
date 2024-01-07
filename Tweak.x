@@ -226,10 +226,14 @@ static int downFinger_=0;
     if (enabled && [[arg1 title] isEqual:@"Annehmen"]) {
         // Your block of code to be executed after the delay
         void (^delayedBlock)(void) = ^{
-            Log(@"Auto-accepting... (WIP)");
-            [self performSelector:@selector(_dismissWithAction:) withObject:arg1];
-
-            Log(@"Delayed action executed");
+            @try {
+              Log(@"Auto-accepting... (WIP)");
+              [self performSelector:@selector(_dismissWithAction:) withObject:arg1];
+  
+              Log(@"Auto-accepted AirDrop request.");
+            } @catch (NSException *exception) {
+              Log(@"Error while auto-accepting AirDrop request: %@", exception.reason);                            
+            }
         };
 
         // Usage:
